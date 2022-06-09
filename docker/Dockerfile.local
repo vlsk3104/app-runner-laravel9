@@ -5,10 +5,15 @@ COPY . /app
 FROM php:8.1-apache
 COPY docker/php.ini /usr/local/etc/php/
 RUN apt update
-RUN apt install -y git
-RUN apt install -y vim
-RUN apt install -y zip unzip
-RUN docker-php-ext-install bcmath pdo_mysql
+RUN apt install  -y git vim libicu-dev libonig-dev libzip-dev unzip locales  libfreetype6-dev libjpeg62-turbo-dev mariadb-client libpng-dev supervisor procps libmagickwand-dev imagemagick && \
+  apt clean && \
+  pecl install imagick && \
+  locale-gen ja_JP.UTF-8 && \
+  localedef -f UTF-8 -i ja_JP ja_JP.UTF-8 && \
+  docker-php-ext-enable imagick && \
+  docker-php-ext-install intl pdo_mysql zip bcmath && \
+  docker-php-ext-configure gd --with-freetype --with-jpeg && \
+  docker-php-ext-install -j$(nproc) gd exif && \docker-php-ext-install bcmath pdo_mysql
 
 # composer install
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
