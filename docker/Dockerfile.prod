@@ -5,7 +5,6 @@ COPY . /app
 FROM php:8.1-apache
 COPY docker/php.ini /usr/local/etc/php/
 RUN apt update
-RUN apt update
 RUN apt install  -y git vim libicu-dev libonig-dev libzip-dev unzip locales  libfreetype6-dev libjpeg62-turbo-dev mariadb-client libpng-dev supervisor procps libmagickwand-dev imagemagick && \
   apt clean && \
   pecl install imagick && \
