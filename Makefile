@@ -61,8 +61,6 @@ log-db:
 	docker-compose logs db
 log-db-watch:
 	docker-compose logs --follow db
-web:
-	docker-compose exec web ash
 app:
 	docker-compose exec app bash
 migrate:
